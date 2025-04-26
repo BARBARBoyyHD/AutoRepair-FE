@@ -1,10 +1,10 @@
 import React from "react";
-import AdminTipsList from "../components/admin/tips/AdminTipsList";
+import SuccessTips from "../components/admin/alert/SuccessTips";
 const CompTest = () => {
   return (
     <div>
       <h1>TEST</h1>
-      <AdminTipsList />
+      <SuccessTips />
     </div>
   );
 };

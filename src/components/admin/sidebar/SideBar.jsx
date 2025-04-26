@@ -29,7 +29,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             text="Tips and Trick"
           />
         </Link>
-        <Link to="/admin/tutorial">
+        <Link to="/admin/tutorial/pages">
           <SidebarItem icon={<IoCarSportOutline size={20} />} text="Tutorial" />
         </Link>
         <Link to="/admin/bengkel">
