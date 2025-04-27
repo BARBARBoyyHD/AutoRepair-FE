@@ -1,0 +1,39 @@
+import { useEffect, useState } from "react";
+import logo from "../../../assets/logo.svg"
+
+export default function NavbarTraining() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      console.log("ScrollY:", window.scrollY);
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+  return (
+    <nav
+      className={`fixed top-0 left-1/2 transform -translate-x-1/2 transition-all duration-300 ease-in-out ${
+        isScrolled
+          ? "w-[55%] h-12 bg-gray-800 bg-opacity-80 shadow-md mt-3 rounded-[30px] p-3"
+          : "  w-full h-20 bg-transparent"
+      } `}
+    >
+      <div className="container mx-auto  flex justify-between items-center h-full text-white">
+        <div className="flex items-center gap-2">
+          <img src={logo} className="w-10 h-10" alt="" />
+          <h1 className=" text-xl font-bold">Drivix</h1>
+        </div>
+
+        <ul className="flex space-x-6 font-semibold ">
+          <li className="hover:text-sky-500 transition-all duration-300">Home</li>
+          <li className="hover:text-sky-500 transition-all duration-300">Bengkel Terdekat</li>
+          <li className="hover:text-sky-500 transition-all duration-300">Tutorial</li>
+        </ul>
+      </div>
+    </nav>
+  );
+}

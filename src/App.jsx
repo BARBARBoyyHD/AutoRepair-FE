@@ -8,6 +8,7 @@ import AdminTipsEdit from "./pages/admin/tips/AdminTipsEdit";
 import AdminTutorialPages from "./pages/admin/tutorial/AdminTutorialPages";
 import AdminAddTutorial from "./pages/admin/tutorial/AdminAddTutorial";
 import AdminEditTutorial from "./pages/admin/tutorial/AdminEditTutorial";
+import LoginPages from "./pages/user/login/LoginPages";
 import CompTest from "./test/CompTest";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Routes>
           {/* user  */}
           <Route path="/" element={<HomePages />} />
+          <Route path="/user/login/pages" element={<LoginPages />} />
           {/* Admin */}
           <Route path="/admin/login/pages" element={<AdminLogin />} />
           <Route path="/admin/dashboard/pages" element={<DashboardPages />} />
