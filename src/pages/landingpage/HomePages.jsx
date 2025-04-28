@@ -37,7 +37,7 @@ const HomePages = () => {
 
       <Section1 />
       <Section2 />
-      <Footer/>
+      <Footer />
     </main>
   );
 };
