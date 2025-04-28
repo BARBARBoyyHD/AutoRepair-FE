@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../../components/user/navbar/Navbar"; // Desktop Navbar
 import NavbarMobile from "../../components/user/navbar/NavbarMobile"; // Mobile Navbar
+import Section1 from "../../components/homepage/Section1";
+import Section2 from "../../components/homepage/Section2";
+import Footer from "../../components/footer/Footer";
 import { Link } from "react-router-dom";
 
 const HomePages = () => {
@@ -32,16 +35,9 @@ const HomePages = () => {
         <Navbar /> // Desktop navbar
       )}
 
-      <section className="h-[100vh] flex items-center justify-center bg-HomePage bg-cover bg-no-repeat bg-center w-full text-white flex-col">
-        <div>
-          <h1 className="text-3xl font-bold underline">Section 1</h1>
-        </div>
-        <Link to={"/dashboard"}>Go to dashboard</Link>
-      </section>
-
-      <section className="h-[100vh] flex items-center justify-center bg-gray-800 text-white">
-        <h1 className="text-3xl font-bold underline">Section 2</h1>
-      </section>
+      <Section1 />
+      <Section2 />
+      <Footer/>
     </main>
   );
 };

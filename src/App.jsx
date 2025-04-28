@@ -13,7 +13,7 @@ import CompTest from "./test/CompTest";
 
 function App() {
   return (
-    <div className="bg-slate-950 min-h-screen">
+    <div className="bg-HomePage min-h-screen">
       <BrowserRouter>
         <Routes>
           {/* user  */}

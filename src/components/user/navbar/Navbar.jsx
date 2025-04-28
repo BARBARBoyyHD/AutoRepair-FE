@@ -18,7 +18,7 @@ export default function NavbarTraining() {
     <nav
       className={`fixed top-0 left-1/2 transform -translate-x-1/2 transition-all duration-300 ease-in-out ${
         isScrolled
-          ? "w-[55%] h-12 bg-gray-800 bg-opacity-80 shadow-md mt-3 rounded-[30px] p-3"
+          ? "w-[55%] h-12 bg-[#222021] bg-opacity-90 shadow-md mt-3 rounded-[30px] p-3"
           : "  w-full h-20 bg-transparent"
       } `}
     >

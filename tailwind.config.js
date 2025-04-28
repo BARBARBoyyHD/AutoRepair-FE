@@ -5,6 +5,8 @@ export default {
     extend: {
       backgroundImage: {
         HomePage: "url('/src/assets/HomePage.svg')", // Corrected path
+        CarHomePage:"url('/src/assets/car.svg')",
+        CarBlack:"url('/src/assets/carblack.svg')",
       },
     },
   },
