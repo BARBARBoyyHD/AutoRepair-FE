@@ -10,7 +10,7 @@ export default function NavbarMobile({ isOpen, handleOpen }) {
       <Link to={""} className="flex items-center gap-3">
         <img src={logo} className="w-10 h-10" alt="" />
 
-        <h1 className="font-semibold text-white">BookStore</h1>
+        <h1 className="font-semibold text-white">Drivix</h1>
       </Link>
 
       {/* Mobile menu icon */}
