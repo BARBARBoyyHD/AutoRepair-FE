@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import logo from "../../../assets/logo.svg"
-
+import logo from "../../../assets/logo.svg";
+import { Link } from "react-router-dom";
 export default function NavbarTraining() {
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -29,9 +29,15 @@ export default function NavbarTraining() {
         </div>
 
         <ul className="flex space-x-6 font-semibold ">
-          <li className="hover:text-sky-500 transition-all duration-300">Home</li>  
-          <li className="hover:text-sky-500 transition-all duration-300">Bengkel Terdekat</li>
-          <li className="hover:text-sky-500 transition-all duration-300">Tutorial</li>
+          <li className="hover:text-sky-500 transition-all duration-300">
+            <Link to={"/"}>Home</Link>
+          </li>
+          <li className="hover:text-sky-500 transition-all duration-300">
+            <Link to={"/drivix/bengkel/terdekat"}>Bengkel Terdekat</Link>
+          </li>
+          <li className="hover:text-sky-500 transition-all duration-300">
+            <Link to={"/drivix/tutorial/pages"}>Tutorial</Link>
+          </li>
         </ul>
       </div>
     </nav>
