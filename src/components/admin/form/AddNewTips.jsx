@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { BASE_URL } from "../../../config/BaseUrl";
 import SuccessTips from "../alert/SuccessTips";
+import LoadingSpinner from "../loading/LoadingSpinner";
 const AddNewTips = () => {
   const [formData, setFormData] = useState({
     Title: "",
@@ -10,7 +11,7 @@ const AddNewTips = () => {
   });
 
   const [success, setSuccess] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   const editorRef = useRef(null); // Ref for the contenteditable div
 
   const handleInputChange = (e) => {
@@ -38,6 +39,7 @@ const AddNewTips = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const formDataToSend = new FormData();
     formDataToSend.append("Title", formData.Title);
     formDataToSend.append("Description", formData.Description);
@@ -59,6 +61,8 @@ const AddNewTips = () => {
     } catch (error) {
       console.error(error);
       alert("An error occurred while submitting the form.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -66,7 +70,9 @@ const AddNewTips = () => {
     <section className=" p-6 text-white rounded-lg">
       <h1 className="text-2xl mb-6">Add New Tips</h1>
       {success && (
-        <SuccessTips success={success} onClose={() => setSuccess(false)} />
+        <div className="fixed inset-0 z-50">
+          <SuccessTips success={success} onClose={() => setSuccess(false)} />
+        </div>
       )}
 
       <form onSubmit={handleSubmit}>
@@ -221,7 +227,7 @@ const AddNewTips = () => {
           type="submit"
           className="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-md"
         >
-          Add Tip
+          {loading ? <LoadingSpinner /> : "Add Tip"}
         </button>
       </form>
     </section>

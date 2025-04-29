@@ -1,11 +1,9 @@
 import React from "react";
-
+import LoginClerk from "../../../components/user/clerk/LoginClerk";
 const LoginPages = () => {
   return (
     <main>
-      <section>
-        <div className="text-white">LoginPages</div>
-      </section>
+      <LoginClerk />
     </main>
   );
 };

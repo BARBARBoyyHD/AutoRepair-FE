@@ -9,6 +9,9 @@ import AdminTutorialPages from "./pages/admin/tutorial/AdminTutorialPages";
 import AdminAddTutorial from "./pages/admin/tutorial/AdminAddTutorial";
 import AdminEditTutorial from "./pages/admin/tutorial/AdminEditTutorial";
 import LoginPages from "./pages/user/login/LoginPages";
+import SignUpPages from "./pages/user/login/SignUpPages";
+import HomePagesUser from "./pages/user/drivix/HomPagesUser";
+import SSOCallbackHandler from "./utils/SSOCallbackHandler";
 import CompTest from "./test/CompTest";
 
 function App() {
@@ -16,9 +19,16 @@ function App() {
     <div className="bg-HomePage min-h-screen">
       <BrowserRouter>
         <Routes>
-          {/* user  */}
           <Route path="/" element={<HomePages />} />
+          {/* user  */}
+          <Route path="/drivix/user/homepage" element={<HomePagesUser />} />
           <Route path="/user/login/pages" element={<LoginPages />} />
+          <Route path="/user/signUp/pages" element={<SignUpPages />} />
+          <Route
+            path="/user/login/pages/sso-callback"
+            element={<SSOCallbackHandler />}
+          />
+
           {/* Admin */}
           <Route path="/admin/login/pages" element={<AdminLogin />} />
           <Route path="/admin/dashboard/pages" element={<DashboardPages />} />

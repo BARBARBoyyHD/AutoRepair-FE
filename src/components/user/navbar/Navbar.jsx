@@ -29,7 +29,7 @@ export default function NavbarTraining() {
         </div>
 
         <ul className="flex space-x-6 font-semibold ">
-          <li className="hover:text-sky-500 transition-all duration-300">Home</li>
+          <li className="hover:text-sky-500 transition-all duration-300">Home</li>  
           <li className="hover:text-sky-500 transition-all duration-300">Bengkel Terdekat</li>
           <li className="hover:text-sky-500 transition-all duration-300">Tutorial</li>
         </ul>
