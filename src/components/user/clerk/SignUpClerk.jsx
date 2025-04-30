@@ -8,7 +8,7 @@ const SignUpClerk = () => {
           path="/user/signUp/pages"
           routing="path"
           signInUrl="/user/login/pages"
-          afterSignUpUrl="/user/login/pages"
+          afterSignUpUrl="/drivix/user/homepage" // ✅ Fix this
         />
       </div>
     </section>

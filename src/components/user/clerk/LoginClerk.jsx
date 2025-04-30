@@ -18,8 +18,9 @@ const LoginClerk = () => {
           path="/user/login/pages"
           routing="path"
           signUpUrl="/user/signUp/pages"
+          redirectUrl="/drivix/user/homepage"
           afterSignInUrl="/drivix/user/homepage"
-          signInFallback={handleSignInError} // ✅ use custom fallback only
+          signInFallback={handleSignInError} 
         />
       </div>
     </section>
