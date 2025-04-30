@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import NavbarUserMobile from "../../../components/user/navbar/NavbarUserMobile";
-
-import TutorialList from "../../../components/user/drivix/tutorial/TutorialList";
+import BengkelComp from "../../../components/user/drivix/Bengkel/BengkelComp";
 import NavbarUser from "../../../components/user/navbar/NavbarUser";
-const TutorialPages = () => {
+import NavbarUserMobile from "../../../components/user/navbar/NavbarUserMobile";
+const BengkelPages = () => {
   const [isMobile, setIsMobile] = useState(false); // State to track if it's mobile view
   const [isOpen, setIsOpen] = useState(false); // State to manage the mobile menu
 
@@ -29,9 +28,9 @@ const TutorialPages = () => {
       ) : (
         <NavbarUser /> // Desktop navbar
       )}
-      <TutorialList />
+      <BengkelComp />
     </main>
   );
 };
 
-export default TutorialPages;
+export default BengkelPages;

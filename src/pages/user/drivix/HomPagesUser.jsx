@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../../../components/user/navbar/Navbar";
-import NavbarMobile from "../../../components/user/navbar/NavbarMobile";
 import Section1 from "../../../components/user/drivix/Section1";
 import Section2 from "../../../components/user/drivix/Section2";
+import NavbarUserMobile from "../../../components/user/navbar/NavbarUserMobile";
+import NavbarUser from "../../../components/user/navbar/NavbarUser";
 const HomPagesUser = () => {
   const [isMobile, setIsMobile] = useState(false); // State to track if it's mobile view
   const [isOpen, setIsOpen] = useState(false); // State to manage the mobile menu
@@ -25,9 +25,9 @@ const HomPagesUser = () => {
   return (
     <main>
       {isMobile ? (
-        <NavbarMobile isOpen={isOpen} handleOpen={handleOpen} />
+        <NavbarUserMobile isOpen={isOpen} handleOpen={handleOpen} />
       ) : (
-        <Navbar /> // Desktop navbar
+        <NavbarUser /> // Desktop navbar
       )}
       <Section1 />
       <Section2 />

@@ -2,20 +2,25 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../../../config/BaseUrl";
 import { Link } from "react-router-dom";
+import LoadingSpinner from "../loading/LoadingSpinner";
 
 const Section2 = () => {
   const [tips, setTips] = useState([]);
   const [error, setError] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const getAllTips = async () => {
     try {
+      setLoading(true);
       const result = await axios.get(`${BASE_URL}/api/v1/get/all/tips`);
       const response = result.data.data;
       console.log("Tips: ", response);
+
       setTips(response);
     } catch (error) {
       console.error(error);
       setError("Failed to fetch tips.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -26,9 +31,15 @@ const Section2 = () => {
   if (tips.length === 0) {
     return (
       <section className="h-[100vh] flex justify-center items-center">
-        <h1 className="text-white text-3xl">Tips coming soon</h1>
+        <LoadingSpinner />
       </section>
     );
+  }
+
+  if (error) {
+    <section className="h-[100vh] flex justify-center items-center">
+      <h1>Tips Will Coming Soon</h1>
+    </section>;
   }
 
   return (
@@ -61,7 +72,7 @@ const Section2 = () => {
             </div>
             <div>
               <Link
-                to={`/somepage/${tip.id}`}
+                to={`/drivix/single/tips/${tip.Tips_Id}`}
                 className="mt-auto bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-center inline-block"
               >
                 Buka

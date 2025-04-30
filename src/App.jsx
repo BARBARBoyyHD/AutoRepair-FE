@@ -12,7 +12,11 @@ import LoginPages from "./pages/user/login/LoginPages";
 import SignUpPages from "./pages/user/login/SignUpPages";
 import HomePagesUser from "./pages/user/drivix/HomPagesUser";
 import TutorialPages from "./pages/user/drivix/TutorialPages";
+import SingleTutorial from "./pages/user/drivix/SingleTutorial";
+import BengkelPages from "./pages/user/drivix/BengkelPages";
+import TipsSingle from "./pages/user/drivix/TipsSingle";
 import SSOCallbackHandler from "./utils/SSOCallbackHandler";
+import ProtectedRoute from "./utils/ProtectedRoutes";
 import CompTest from "./test/CompTest";
 
 function App() {
@@ -22,14 +26,27 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePages />} />
           {/* user  */}
-          <Route path="/drivix/user/homepage" element={<HomePagesUser />} />
+
           <Route path="/user/login/pages" element={<LoginPages />} />
           <Route path="/user/signUp/pages" element={<SignUpPages />} />
           <Route
             path="/user/login/pages/sso-callback"
             element={<SSOCallbackHandler />}
           />
-          <Route path="/drivix/tutorial/pages" element={<TutorialPages />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/drivix/user/homepage" element={<HomePagesUser />} />
+            <Route path="/drivix/tutorial/pages" element={<TutorialPages />} />
+            <Route
+              path="/drivix/single/tutorial/:Tutor_Id"
+              element={<SingleTutorial />}
+            />
+            <Route path="/drivix/bengkel/terdekat" element={<BengkelPages />} />
+            <Route
+              path="/drivix/single/tips/:Tips_Id"
+              element={<TipsSingle />}
+            />
+          </Route>
+
           {/* Admin */}
           <Route path="/admin/login/pages" element={<AdminLogin />} />
           <Route path="/admin/dashboard/pages" element={<DashboardPages />} />

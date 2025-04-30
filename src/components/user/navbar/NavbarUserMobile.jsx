@@ -36,7 +36,7 @@ export default function NavbarMobile({ isOpen, handleOpen }) {
         style={{ transition: "transform 0.3s ease, opacity 0.3s ease" }}
       >
         <li className="hover:text-sky-500 transition-all duration-300">
-          <Link to={"/"}>Home</Link>
+          <Link to={"/drivix/user/homepage"}>Home</Link>
         </li>
         <li className="hover:text-sky-500 transition-all duration-300">
           <Link to={"/drivix/bengkel/terdekat"}>Bengkel Terdekat</Link>

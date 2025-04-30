@@ -4,17 +4,21 @@ import axios from "axios";
 import { BiSearch } from "react-icons/bi";
 import { IoIosArrowForward } from "react-icons/io";
 import { Link } from "react-router-dom";
-
+import LoadingSpinner from "../../loading/LoadingSpinner";
 const TutorialList = () => {
   const [tutorials, setTutorials] = useState([]);
+  const [loading, setLoading] = useState(false);
   const getTutorialList = async () => {
     try {
+      setLoading(true);
       const result = await axios.get(`${BASE_URL}/api/v1/get/all/tutorial`);
       const response = result.data.data;
       console.log(response);
       setTutorials(response);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -36,25 +40,31 @@ const TutorialList = () => {
       </div>
 
       <div className="w-[1000px] h-[500px] p-8 rounded-[8px] bg-[#333333] flex gap-9 flex-wrap ">
-        {tutorials.map((tutorial, index) => (
-          <div key={index}>
-            <div className="w-[200px] h-[150px] rounded-[8px] gap-4">
-              <img
-                src={tutorial.Thumbnail}
-                className="h-full w-full object-cover"
-                alt=""
-              />
-            </div>
-            <div>
-              <h1 className="text-white font-semibold">{tutorial.Title}</h1>
-            </div>
-            <div className="flex justify-end">
-              <Link to={`/somepages/:id`}>
-                <IoIosArrowForward className="text-white"/>
-              </Link>
-            </div>
+        {loading ? (
+          <div className="flex justify-center items-center w-full">
+            <LoadingSpinner />
           </div>
-        ))}
+        ) : (
+          tutorials.map((tutorial, index) => (
+            <div key={index}>
+              <div className="w-[200px] h-[150px] rounded-[8px] gap-4">
+                <img
+                  src={tutorial.Thumbnail}
+                  className="h-full w-full object-cover"
+                  alt=""
+                />
+              </div>
+              <div>
+                <h1 className="text-white font-semibold">{tutorial.Title}</h1>
+              </div>
+              <div className="flex justify-end">
+                <Link to={`/drivix/single/tutorial/${tutorial.Tutor_Id}`}>
+                  <IoIosArrowForward className="text-white" />
+                </Link>
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </section>
   );

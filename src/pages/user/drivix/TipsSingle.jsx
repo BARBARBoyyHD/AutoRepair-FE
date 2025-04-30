@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import NavbarUserMobile from "../../../components/user/navbar/NavbarUserMobile";
-
-import TutorialList from "../../../components/user/drivix/tutorial/TutorialList";
+import SingleTutorialComp from "../../../components/user/drivix/tutorial/SingleTutorialComp";
 import NavbarUser from "../../../components/user/navbar/NavbarUser";
-const TutorialPages = () => {
+import NavbarUserMobile from "../../../components/user/navbar/NavbarUserMobile";
+import TipsSingleComp from "../../../components/user/drivix/tips/TipsSingleComp";
+import Section1 from "../../../components/user/drivix/Section1";
+const TipsSingle = () => {
   const [isMobile, setIsMobile] = useState(false); // State to track if it's mobile view
   const [isOpen, setIsOpen] = useState(false); // State to manage the mobile menu
 
@@ -29,9 +30,10 @@ const TutorialPages = () => {
       ) : (
         <NavbarUser /> // Desktop navbar
       )}
-      <TutorialList />
+      <Section1 />
+      <TipsSingleComp />
     </main>
   );
 };
 
-export default TutorialPages;
+export default TipsSingle;
