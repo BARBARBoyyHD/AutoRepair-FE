@@ -1,18 +1,27 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BASE_URL } from "../../../config/BaseUrl";
-import SuccessTutorial from "../alert/SuccessTutorial";
+import SuccessBengkel from "../alert/SuccessBengkel";
 import LoadingSpinner from "../loading/LoadingSpinner";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
-const AddNewTutorial = () => {
+const EditBengkel = () => {
+  const { Bengkel_Id } = useParams();
   const [formData, setFormData] = useState({
-    Title: "",
+    Bengkel_name: "",
+    Address: "",
+    Phone_Number: "",
     Description: "",
     Link_Tutor: "",
-    Thumbnail: null,
+    Coordinate_X: "",
+    Coordinate_Y: "",
+    Link: "",
+    Image: "",
   });
 
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [imagePreview, setImagePreview] = useState("");
   const editorRef = useRef(null); // Ref for the contenteditable div
 
   const handleInputChange = (e) => {
@@ -22,7 +31,11 @@ const AddNewTutorial = () => {
 
   const handleFileChange = (e) => {
     const { name, files } = e.target;
-    setFormData({ ...formData, [name]: files[0] });
+    const file = files[0];
+    setFormData({ ...formData, [name]: file });
+    if (file) {
+      setImagePreview(URL.createObjectURL(file));
+    }
   };
 
   const handleEditorChange = () => {
@@ -38,87 +51,195 @@ const AddNewTutorial = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    const formDataToSend = new FormData();
-    formDataToSend.append("Title", formData.Title);
-    formDataToSend.append("Description", formData.Description);
-    formDataToSend.append("Link Tutorial", formData.Link_Tutor);
-    formDataToSend.append("Thumbnail", formData.Thumbnail);
-
+  const getsingleBengkel = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/api/v2/post/tutorial`, {
-        method: "POST",
-        body: formDataToSend,
+      const result = await axios.get(
+        `${BASE_URL}/api/v2/single/bengkel/${Bengkel_Id}`
+      );
+      const response = result.data.data;
+      console.log("Bengkel : ", response);
+      setFormData({
+        Bengkel_name: response.Bengkel_name || "",
+        Address: response.Address || "",
+        Phone_Number: response.Phone_Number || "",
+        Description: response.Description || "",
+        Link_Tutor: response.Link_Tutor || "",
+        Coordinate_X: response.Coordinate_X || "",
+        Coordinate_Y: response.Coordinate_Y || "",
+        Link: response.Link || "",
+        Image: response.image || null,
       });
-
-      const result = await response.json();
-      if (response.ok) {
-        setSuccess(true);
-      } else {
-        alert(result.message || "Error adding tip");
-      }
+      setImagePreview(response.image);
     } catch (error) {
       console.error(error);
       alert("An error occurred while submitting the form.");
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const formDataToSend = new FormData();
+    formDataToSend.append("Bengkel_name", formData.Bengkel_name);
+    formDataToSend.append("Address", formData.Address);
+    formDataToSend.append("Phone_Number", Number(formData.Phone_Number));
+    formDataToSend.append("Description", formData.Description);
+    formDataToSend.append("Link_Tutor", formData.Link_Tutor);
+    formDataToSend.append("Coordinate_X", parseFloat(formData.Coordinate_X));
+    formDataToSend.append("Coordinate_Y", parseFloat(formData.Coordinate_Y));
+    formDataToSend.append("Link", formData.Link);
+    formDataToSend.append("Image", formData.Image);
+
+    try {
+      const response = await fetch(
+        `${BASE_URL}/api/v2/bengkel/edit/${Bengkel_Id}`,
+        {
+          method: "PUT",
+          body: formDataToSend,
+        }
+      );
+
+      const result = await response.json();
+      if (response.ok) {
+        setSuccess(true);
+      } else {
+        alert(result.message || "Error adding bengkel");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("An error occurred while submitting the form.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getsingleBengkel();
+  }, [Bengkel_Id]);
+
   return (
     <section className=" p-6 text-white rounded-lg">
-      <h1 className="text-2xl mb-6">Add New Tips</h1>
+      <h1 className="text-2xl mb-6">Edit Bengkel</h1>
+
       {success && (
         <div className="fixed inset-0 z-50">
-          <SuccessTutorial
-            success={success}
-            onClose={() => setSuccess(false)}
-          />
+          <SuccessBengkel success={success} onClose={() => setSuccess(false)} />
         </div>
       )}
 
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label className="block text-lg mb-2" htmlFor="Title">
-            Title
+          <label className="block text-lg mb-2" htmlFor="Bengkel_name">
+            Bengkel Name
           </label>
           <input
             type="text"
-            id="Title"
-            name="Title"
-            value={formData.Title}
+            id="Bengkel_name"
+            name="Bengkel_name"
+            value={formData.Bengkel_name}
             onChange={handleInputChange}
             className="w-full p-3 bg-gray-800 text-white rounded-md border border-gray-700"
-            placeholder="Enter the title"
+            placeholder="Enter the workshop name"
           />
         </div>
+
         <div className="mb-4">
-          <label className="block text-lg mb-2" htmlFor="Title">
-            Link Tutorial
+          <label className="block text-lg mb-2" htmlFor="Address">
+            Address
           </label>
           <input
             type="text"
-            id="Link_Tutor"
-            name="Link_Tutor"
-            value={formData.Link_Tutor}
+            id="Address"
+            name="Address"
+            value={formData.Address}
             onChange={handleInputChange}
             className="w-full p-3 bg-gray-800 text-white rounded-md border border-gray-700"
-            placeholder="Enter the Link tutorial"
+            placeholder="Enter the address"
           />
         </div>
+
         <div className="mb-4">
-          <label className="block text-lg mb-2" htmlFor="Thumbnail">
-            Thumbnail Image
+          <label className="block text-lg mb-2" htmlFor="Phone_Number">
+            Phone Number
+          </label>
+          <input
+            type="number"
+            id="Phone_Number"
+            name="Phone_Number"
+            value={formData.Phone_Number}
+            onChange={handleInputChange}
+            className="w-full p-3 bg-gray-800 text-white rounded-md border border-gray-700"
+            placeholder="Enter the phone number"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-lg mb-2" htmlFor="Coordinate_X">
+            Coordinate X
+          </label>
+          <input
+            type="number"
+            step="any"
+            id="Coordinate_X"
+            name="Coordinate_X"
+            value={formData.Coordinate_X}
+            onChange={handleInputChange}
+            className="w-full p-3 bg-gray-800 text-white rounded-md border border-gray-700"
+            placeholder="Enter X coordinate"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-lg mb-2" htmlFor="Coordinate_Y">
+            Coordinate Y
+          </label>
+          <input
+            type="number"
+            step="any"
+            id="Coordinate_Y"
+            name="Coordinate_Y"
+            value={formData.Coordinate_Y}
+            onChange={handleInputChange}
+            className="w-full p-3 bg-gray-800 text-white rounded-md border border-gray-700"
+            placeholder="Enter Y coordinate"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-lg mb-2" htmlFor="Link">
+            Link
+          </label>
+          <input
+            type="text"
+            id="Link"
+            name="Link"
+            value={formData.Link}
+            onChange={handleInputChange}
+            className="w-full p-3 bg-gray-800 text-white rounded-md border border-gray-700"
+            placeholder="Enter the website or reference link"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-lg mb-2" htmlFor="Image">
+            Image
           </label>
           <input
             type="file"
-            id="Thumbnail"
-            name="Thumbnail"
+            id="Image"
+            name="Image"
             onChange={handleFileChange}
             accept="image/*"
             className="w-full p-3 bg-gray-800 text-white rounded-md border border-gray-700"
           />
+          {imagePreview && (
+            <img
+              src={imagePreview}
+              alt="Preview"
+              className="mt-2 w-48 h-auto rounded-md border border-gray-500"
+            />
+          )}
         </div>
 
         <div className="mb-4">
@@ -221,6 +342,7 @@ const AddNewTutorial = () => {
             contentEditable="true"
             className="p-4 mt-4 border border-gray-300 h-[20vw] rounded-lg dark:bg-gray-700 dark:border-gray-600"
             onInput={handleEditorChange}
+            dangerouslySetInnerHTML={{ __html: formData.Description }}
           >
             {/* Rich text content goes here */}
           </div>
@@ -230,11 +352,11 @@ const AddNewTutorial = () => {
           type="submit"
           className="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-md"
         >
-          {loading ? <LoadingSpinner /> : "Add Tutorial"}
+          {loading ? <LoadingSpinner /> : "Edit Bengkel"}
         </button>
       </form>
     </section>
   );
 };
 
-export default AddNewTutorial;
+export default EditBengkel;

@@ -6,6 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { RiPencilFill } from "react-icons/ri";
 import { FaTrash } from "react-icons/fa";
 import DeleteTips from "../button/tips/DeleteTips";
+import LoadingSpinner from "../loading/LoadingSpinner";
+
 const AdminTipsList = () => {
   const [data, setData] = useState([]);
   const [error, setError] = useState("");
@@ -53,10 +55,7 @@ const AdminTipsList = () => {
       {error && <div className="text-red-500 font-medium mb-4">{error}</div>}
 
       {loading ? (
-        <div className="text-center py-10">
-          <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-16 w-16 mx-auto mb-4 animate-spin border-t-white"></div>
-          <p>Loading tips...</p>
-        </div>
+        <LoadingSpinner />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {data.map((item, index) => (
@@ -80,7 +79,10 @@ const AdminTipsList = () => {
                   <Link to={`/admin/tips/edit/${item.Tips_Id}`}>
                     <RiPencilFill />
                   </Link>
-                  <DeleteTips Tips_Id={item.Tips_Id} onDeleteSuccess={getTipsList} />
+                  <DeleteTips
+                    Tips_Id={item.Tips_Id}
+                    onDeleteSuccess={getTipsList}
+                  />
                 </div>
               </div>
             </div>

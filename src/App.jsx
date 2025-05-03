@@ -15,13 +15,16 @@ import TutorialPages from "./pages/user/drivix/TutorialPages";
 import SingleTutorial from "./pages/user/drivix/SingleTutorial";
 import BengkelPages from "./pages/user/drivix/BengkelPages";
 import TipsSingle from "./pages/user/drivix/TipsSingle";
+import AdminBengkelPages from "./pages/admin/bengkel/AdminBengkelPages";
+import AdminAddBengkel from "./pages/admin/bengkel/AdminAddBengkel";
+import AdminEditBengkel from "./pages/admin/bengkel/AdminEditBengkel";
 import SSOCallbackHandler from "./utils/SSOCallbackHandler";
 import ProtectedRoute from "./utils/ProtectedRoutes";
 import CompTest from "./test/CompTest";
 
 function App() {
   return (
-    <div className="bg-HomePage min-h-screen">
+    <div className="bg-HomePage bg-center bg-no-repeat bg-cover min-h-screen">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePages />} />
@@ -66,6 +69,16 @@ function App() {
             path="/admin/tutorial/edit/:Tutor_Id"
             element={<AdminEditTutorial />}
           />
+          <Route path="/admin/bengkel/pages" element={<AdminBengkelPages />} />
+          <Route
+            path="/admin/add/bengkel/pages"
+            element={<AdminAddBengkel />}
+          />
+          <Route
+            path="/admin/edit/bengkel/:Bengkel_Id"
+            element={<AdminEditBengkel />}
+          />
+
           {/* Test */}
           <Route path="/test" element={<CompTest />} />
         </Routes>

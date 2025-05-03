@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 
-const SuccessTips = ({ success, onClose }) => {
+const SuccessBengkel = ({ success, onClose }) => {
   const [visible, setVisible] = useState(false);
   const navigate = useNavigate(); // Create a navigate function
 
@@ -13,7 +13,7 @@ const SuccessTips = ({ success, onClose }) => {
       setVisible(false);
       setTimeout(() => {
         onClose();
-        navigate("/admin/tips/pages"); // Replace '/your-route' with the path you want to navigate to
+        navigate("/admin/bengkel/pages"); // Replace '/your-route' with the path you want to navigate to
       }, 300); // Ensure the onClose function runs after the animation finishes
     }, 3000);
 
@@ -25,7 +25,9 @@ const SuccessTips = ({ success, onClose }) => {
     <div className="flex justify-center items-center h-screen">
       <div
         className={`w-[80vw] sm:w-[60vw] md:w-[40vw] h-[30vw] sm:h-[20vw] md:h-[20vw] flex justify-center items-center rounded-lg bg-emerald-500 flex-col
-          ${visible ? "scale-100 opacity-100" : "scale-50 opacity-0"} transition-all duration-300`}
+          ${
+            visible ? "scale-100 opacity-100" : "scale-50 opacity-0"
+          } transition-all duration-300`}
       >
         <FaRegCheckCircle className="text-white sm:w-24 sm:h-24 md:w-32 md:h-32 w-16 h-16" />
         <h1 className="text-white font-bold sm:text-xl md:text-2xl text-lg">
@@ -36,4 +38,4 @@ const SuccessTips = ({ success, onClose }) => {
   );
 };
 
-export default SuccessTips;
+export default SuccessBengkel;

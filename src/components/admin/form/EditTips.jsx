@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { BASE_URL } from "../../../config/BaseUrl";
 import SuccessTips from "../alert/SuccessTips";
 import { useParams, useNavigate } from "react-router-dom"; // <--- untuk ambil Tips_Id dari URL
+import LoadingSpinner from "../loading/LoadingSpinner";
 
 const EditTips = () => {
   const { Tips_Id } = useParams(); // Ambil ID dari URL
@@ -92,6 +93,8 @@ const EditTips = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
     const formDataToSend = new FormData();
     formDataToSend.append("Title", formData.Title);
     formDataToSend.append("Description", formData.Description);
@@ -168,7 +171,9 @@ const EditTips = () => {
     <section className="p-6 text-white rounded-lg">
       <h1 className="text-2xl mb-6">Edit Tips</h1>
       {success && (
-        <SuccessTips success={success} onClose={() => setSuccess(false)} />
+        <div className="fixed inset-0 z-50">
+          <SuccessTips success={success} onClose={() => setSuccess(false)} />
+        </div>
       )}
 
       <form onSubmit={handleSubmit}>
@@ -287,7 +292,7 @@ const EditTips = () => {
           type="submit"
           className="w-full h-12 bg-sky-700 hover:bg-sky-600 text-white font-bold py-2 px-6 rounded-lg mt-4"
         >
-          Update Tip
+          {loading ? <LoadingSpinner /> : " Update Tip"}
         </button>
       </form>
     </section>

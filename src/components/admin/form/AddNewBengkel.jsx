@@ -1,14 +1,19 @@
 import React, { useRef, useState } from "react";
 import { BASE_URL } from "../../../config/BaseUrl";
-import SuccessTutorial from "../alert/SuccessTutorial";
+import SuccessBengkel from "../alert/SuccessBengkel";
 import LoadingSpinner from "../loading/LoadingSpinner";
 
-const AddNewTutorial = () => {
+const AddNewBengkel = () => {
   const [formData, setFormData] = useState({
-    Title: "",
+    Bengkel_name: "",
+    Address: "",
+    Phone_Number: "",
     Description: "",
     Link_Tutor: "",
-    Thumbnail: null,
+    Coordinate_X: "",
+    Coordinate_Y: "",
+    Link: "",
+    Image: null,
   });
 
   const [success, setSuccess] = useState(false);
@@ -43,13 +48,18 @@ const AddNewTutorial = () => {
     setLoading(true);
 
     const formDataToSend = new FormData();
-    formDataToSend.append("Title", formData.Title);
+    formDataToSend.append("Bengkel_name", formData.Bengkel_name);
+    formDataToSend.append("Address", formData.Address);
+    formDataToSend.append("Phone_Number", Number(formData.Phone_Number));
     formDataToSend.append("Description", formData.Description);
-    formDataToSend.append("Link Tutorial", formData.Link_Tutor);
-    formDataToSend.append("Thumbnail", formData.Thumbnail);
+    formDataToSend.append("Link_Tutor", formData.Link_Tutor);
+    formDataToSend.append("Coordinate_X", parseFloat(formData.Coordinate_X));
+    formDataToSend.append("Coordinate_Y", parseFloat(formData.Coordinate_Y));
+    formDataToSend.append("Link", formData.Link);
+    formDataToSend.append("Image", formData.Image);
 
     try {
-      const response = await fetch(`${BASE_URL}/api/v2/post/tutorial`, {
+      const response = await fetch(`${BASE_URL}/api/v2/bengkel/post`, {
         method: "POST",
         body: formDataToSend,
       });
@@ -58,11 +68,13 @@ const AddNewTutorial = () => {
       if (response.ok) {
         setSuccess(true);
       } else {
-        alert(result.message || "Error adding tip");
+        alert(result.message || "Error adding bengkel");
       }
     } catch (error) {
       console.error(error);
       alert("An error occurred while submitting the form.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -71,50 +83,111 @@ const AddNewTutorial = () => {
       <h1 className="text-2xl mb-6">Add New Tips</h1>
       {success && (
         <div className="fixed inset-0 z-50">
-          <SuccessTutorial
-            success={success}
-            onClose={() => setSuccess(false)}
-          />
+          <SuccessBengkel success={success} onClose={() => setSuccess(false)} />
         </div>
       )}
 
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label className="block text-lg mb-2" htmlFor="Title">
-            Title
+          <label className="block text-lg mb-2" htmlFor="Bengkel_name">
+            Bengkel Name
           </label>
           <input
             type="text"
-            id="Title"
-            name="Title"
-            value={formData.Title}
+            id="Bengkel_name"
+            name="Bengkel_name"
+            value={formData.Bengkel_name}
             onChange={handleInputChange}
             className="w-full p-3 bg-gray-800 text-white rounded-md border border-gray-700"
-            placeholder="Enter the title"
+            placeholder="Enter the workshop name"
           />
         </div>
+
         <div className="mb-4">
-          <label className="block text-lg mb-2" htmlFor="Title">
-            Link Tutorial
+          <label className="block text-lg mb-2" htmlFor="Address">
+            Address
           </label>
           <input
             type="text"
-            id="Link_Tutor"
-            name="Link_Tutor"
-            value={formData.Link_Tutor}
+            id="Address"
+            name="Address"
+            value={formData.Address}
             onChange={handleInputChange}
             className="w-full p-3 bg-gray-800 text-white rounded-md border border-gray-700"
-            placeholder="Enter the Link tutorial"
+            placeholder="Enter the address"
           />
         </div>
+
         <div className="mb-4">
-          <label className="block text-lg mb-2" htmlFor="Thumbnail">
-            Thumbnail Image
+          <label className="block text-lg mb-2" htmlFor="Phone_Number">
+            Phone Number
+          </label>
+          <input
+            type="number"
+            id="Phone_Number"
+            name="Phone_Number"
+            value={formData.Phone_Number}
+            onChange={handleInputChange}
+            className="w-full p-3 bg-gray-800 text-white rounded-md border border-gray-700"
+            placeholder="Enter the phone number"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-lg mb-2" htmlFor="Coordinate_X">
+            Coordinate X
+          </label>
+          <input
+            type="number"
+            step="any"
+            id="Coordinate_X"
+            name="Coordinate_X"
+            value={formData.Coordinate_X}
+            onChange={handleInputChange}
+            className="w-full p-3 bg-gray-800 text-white rounded-md border border-gray-700"
+            placeholder="Enter X coordinate"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-lg mb-2" htmlFor="Coordinate_Y">
+            Coordinate Y
+          </label>
+          <input
+            type="number"
+            step="any"
+            id="Coordinate_Y"
+            name="Coordinate_Y"
+            value={formData.Coordinate_Y}
+            onChange={handleInputChange}
+            className="w-full p-3 bg-gray-800 text-white rounded-md border border-gray-700"
+            placeholder="Enter Y coordinate"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-lg mb-2" htmlFor="Link">
+            Link
+          </label>
+          <input
+            type="text"
+            id="Link"
+            name="Link"
+            value={formData.Link}
+            onChange={handleInputChange}
+            className="w-full p-3 bg-gray-800 text-white rounded-md border border-gray-700"
+            placeholder="Enter the website or reference link"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-lg mb-2" htmlFor="Image">
+            Image Image
           </label>
           <input
             type="file"
-            id="Thumbnail"
-            name="Thumbnail"
+            id="Image"
+            name="Image"
             onChange={handleFileChange}
             accept="image/*"
             className="w-full p-3 bg-gray-800 text-white rounded-md border border-gray-700"
@@ -230,11 +303,11 @@ const AddNewTutorial = () => {
           type="submit"
           className="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-md"
         >
-          {loading ? <LoadingSpinner /> : "Add Tutorial"}
+          {loading ? <LoadingSpinner /> : "Add Bengkel"}
         </button>
       </form>
     </section>
   );
 };
 
-export default AddNewTutorial;
+export default AddNewBengkel;

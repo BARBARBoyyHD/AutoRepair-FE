@@ -37,7 +37,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               text="Tutorial"
             />
           </Link>
-          <Link to="/admin/bengkel">
+          <Link to="/admin/bengkel/pages">
             <SidebarItem
               icon={<FaScrewdriverWrench size={20} />}
               text="Bengkel" 
