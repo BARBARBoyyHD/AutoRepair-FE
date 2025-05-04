@@ -35,15 +35,17 @@ export default function NavbarMobile({ isOpen, handleOpen }) {
         }`}
         style={{ transition: "transform 0.3s ease, opacity 0.3s ease" }}
       >
-        <li className="hover:text-sky-500 transition-all duration-300">
-          <Link to={"/"}>Home</Link>
-        </li>
-        <li className="hover:text-sky-500 transition-all duration-300">
-          <Link to={"/drivix/bengkel/terdekat"}>Bengkel Terdekat</Link>
-        </li>
-        <li className="hover:text-sky-500 transition-all duration-300">
-          <Link to={"/drivix/tutorial/pages"}>Tutorial</Link>
-        </li>
+        <ul className="p-3">
+          <li className="hover:text-sky-500 transition-all duration-300">
+            <Link to={"/"}>Home</Link>
+          </li>
+          <li className="hover:text-sky-500 transition-all duration-300">
+            <Link to={"/drivix/bengkel/terdekat"}>Bengkel Terdekat</Link>
+          </li>
+          <li className="hover:text-sky-500 transition-all duration-300">
+            <Link to={"/drivix/tutorial/pages"}>Tutorial</Link>
+          </li>
+        </ul>
       </div>
     </header>
   );

@@ -8,6 +8,7 @@ export default {
         CarHomePage: "url('/src/assets/car.svg')",
         CarBlack: "url('/src/assets/carblack.svg')",
         CarUser: "url('/src/assets/carUser.svg')",
+        bengkelBg:"url('/src/assets/bengkelBackground.svg')",
       },
     },
   },

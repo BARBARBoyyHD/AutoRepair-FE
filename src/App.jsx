@@ -18,13 +18,14 @@ import TipsSingle from "./pages/user/drivix/TipsSingle";
 import AdminBengkelPages from "./pages/admin/bengkel/AdminBengkelPages";
 import AdminAddBengkel from "./pages/admin/bengkel/AdminAddBengkel";
 import AdminEditBengkel from "./pages/admin/bengkel/AdminEditBengkel";
+import BengkelSinglePages from "./pages/user/drivix/BengkelSingle";
 import SSOCallbackHandler from "./utils/SSOCallbackHandler";
 import ProtectedRoute from "./utils/ProtectedRoutes";
 import CompTest from "./test/CompTest";
 
 function App() {
   return (
-    <div className="bg-HomePage bg-center bg-no-repeat bg-cover min-h-screen">
+    <div className="bg-HomePage bg-no-repeat bg-center bg-cover">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePages />} />
@@ -47,6 +48,10 @@ function App() {
             <Route
               path="/drivix/single/tips/:Tips_Id"
               element={<TipsSingle />}
+            />
+            <Route
+              path="/drivix/single/bengkel/:Bengkel_Id"
+              element={<BengkelSinglePages />}
             />
           </Route>
 
