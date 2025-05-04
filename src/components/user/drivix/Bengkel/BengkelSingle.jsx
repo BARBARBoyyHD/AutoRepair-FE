@@ -14,7 +14,6 @@ const BengkelSingle = () => {
         `${BASE_URL}/api/v2/single/bengkel/${Bengkel_Id}`
       );
       const response = result.data.data;
-      console.log("Response bengkel :", response);
       setResult(response);
     } catch (error) {
       console.error("error : ", error);

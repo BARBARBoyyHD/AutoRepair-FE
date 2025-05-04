@@ -16,7 +16,6 @@ const SingleTutorialComp = () => {
         `${BASE_URL}/api/v2/single/tutorial/${Tutor_Id}`
       );
       const response = result.data.data;
-      console.log(response);
       setTutorialData(response);
     } catch (error) {
       console.error(error);

@@ -27,7 +27,7 @@ const AdminLoginComonents = () => {
 
     try {
       const res = await axios.post(`${BASE_URL}/api/v2/admin/login`, form);
-        console.log(BASE_URL)
+
       if (res.status === 200) {
         // Example: store token and redirect
         navigate("/admin/dashboard/pages");

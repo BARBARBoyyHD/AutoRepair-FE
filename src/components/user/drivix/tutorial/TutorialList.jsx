@@ -13,7 +13,6 @@ const TutorialList = () => {
       setLoading(true);
       const result = await axios.get(`${BASE_URL}/api/v1/get/all/tutorial`);
       const response = result.data.data;
-      console.log(response);
       setTutorials(response);
     } catch (error) {
       console.error(error);

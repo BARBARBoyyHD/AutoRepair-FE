@@ -22,7 +22,6 @@ const AdminTipsList = () => {
     try {
       const result = await axios.get(`${BASE_URL}/api/v2/list/tips`);
       const tipsData = result.data.data;
-      console.log("TIPS LIST:", tipsData);
       setData(tipsData);
     } catch (err) {
       setError(

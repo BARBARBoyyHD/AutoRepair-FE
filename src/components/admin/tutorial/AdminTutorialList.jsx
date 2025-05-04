@@ -20,7 +20,6 @@ const AdminTutorialList = () => {
       const response = await axios.get(`${BASE_URL}/api/v2/list/tutorial`);
       const tutorialData = response.data.data;
       setData(tutorialData);
-      console.log(tutorialData);
     } catch (error) {
       console.error(error);
     } finally {

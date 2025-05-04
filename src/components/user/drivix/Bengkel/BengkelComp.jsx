@@ -14,8 +14,6 @@ const BengkelComp = () => {
         `${BASE_URL}/api/v1/bengkel?search=${encodeURIComponent(search)}`
       );
       const response = result.data.data;
-
-      console.log("searched data :", response);
       setResult(response);
     } catch (error) {
       console.error("Search failed", error);

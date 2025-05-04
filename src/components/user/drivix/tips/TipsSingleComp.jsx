@@ -12,7 +12,6 @@ const TipsSingleComp = () => {
         `${BASE_URL}/api/v2/single/tips/${Tips_Id}`
       );
       const response = result.data.data;
-      console.log(response);
       setTipsData(response);
     } catch (error) {
       console.error(error);

@@ -13,7 +13,6 @@ const Section2 = () => {
       setLoading(true);
       const result = await axios.get(`${BASE_URL}/api/v1/get/all/tips`);
       const response = result.data.data;
-      console.log("Tips: ", response);
 
       setTips(response);
     } catch (error) {
