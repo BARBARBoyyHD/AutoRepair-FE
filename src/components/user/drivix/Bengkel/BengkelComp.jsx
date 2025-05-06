@@ -3,13 +3,16 @@ import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../../../../config/BaseUrl";
 import { BiSearch } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../../loading/LoadingSpinner";
 
 const BengkelComp = () => {
   const [search, setSearch] = useState("");
   const [result, setResult] = useState([]);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const handleSearch = async () => {
     try {
+      setLoading(true);
       const result = await axios.get(
         `${BASE_URL}/api/v1/bengkel?search=${encodeURIComponent(search)}`
       );
@@ -17,6 +20,8 @@ const BengkelComp = () => {
       setResult(response);
     } catch (error) {
       console.error("Search failed", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -59,40 +64,46 @@ const BengkelComp = () => {
 
       {/* Scrollable Result Area */}
       <div className="mt-4 w-full px-4 overflow-y-auto flex-1 bg-bengkelBg bg-cover bg-center bg-no-repeat">
-        {result.map((item, index) => (
-          <div
-            key={index}
-            onClick={() => goToBengkelSingle(item.Bengkel_Id)}
-            className="bg-white/10 backdrop-blur-md rounded-lg p-4 mb-6 text-white shadow-lg flex flex-col md:flex-row items-start md:items-center gap-4"
-          >
-            <img
-              src={item.image}
-              alt={item.Bengkel_name}
-              className="w-full md:w-48 h-auto object-cover rounded-md"
-            />
-            <div className="flex flex-col">
-              <h1 className="text-lg md:text-xl font-semibold mb-1">
-                {item.Bengkel_name}
-              </h1>
-              <p className="text-sm mb-1">{item.Address}</p>
-              <div
-                className="text-sm mb-1"
-                dangerouslySetInnerHTML={{ __html: item.Description }}
-              ></div>
-              <p className="text-sm mb-2">{item.Phone_Number}</p>
-              {item.Link && (
-                <a
-                  href={item.Link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-400 underline text-sm"
-                >
-                  Visit Website
-                </a>
-              )}
-            </div>
+        {loading ? (
+          <div className="flex justify-center items-center w-full h-full">
+            <LoadingSpinner />
           </div>
-        ))}
+        ) : (
+          result.map((item, index) => (
+            <div
+              key={index}
+              onClick={() => goToBengkelSingle(item.Bengkel_Id)}
+              className="bg-white/10 backdrop-blur-md rounded-lg p-4 mb-6 text-white shadow-lg flex flex-col md:flex-row items-start md:items-center gap-4"
+            >
+              <img
+                src={item.image}
+                alt={item.Bengkel_name}
+                className="w-full md:w-48 h-auto object-cover rounded-md"
+              />
+              <div className="flex flex-col">
+                <h1 className="text-lg md:text-xl font-semibold mb-1">
+                  {item.Bengkel_name}
+                </h1>
+                <p className="text-sm mb-1">{item.Address}</p>
+                <div
+                  className="text-sm mb-1"
+                  dangerouslySetInnerHTML={{ __html: item.Description }}
+                ></div>
+                <p className="text-sm mb-2">{item.Phone_Number}</p>
+                {item.Link && (
+                  <a
+                    href={item.Link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-400 underline text-sm"
+                  >
+                    Visit Website
+                  </a>
+                )}
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </section>
   );

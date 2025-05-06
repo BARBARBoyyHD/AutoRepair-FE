@@ -6,7 +6,6 @@ export default function NavbarTraining() {
 
   useEffect(() => {
     const handleScroll = () => {
-      console.log("ScrollY:", window.scrollY);
       setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener("scroll", handleScroll);
