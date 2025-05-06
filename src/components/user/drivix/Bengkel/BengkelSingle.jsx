@@ -30,7 +30,7 @@ const BengkelSingle = () => {
   }, []);
 
   return (
-    <section className="min-h-screen pt-[50px] sm:pt-[100px] px-4 bg-bengkelBg bg-cover bg-center bg-no-repeat ">
+    <section className=" pt-[50px] sm:pt-[100px] px-4 ">
       <div className=" ">
         {loading ? (
           <LoadingSpinner />
