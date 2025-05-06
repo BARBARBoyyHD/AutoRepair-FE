@@ -8,6 +8,7 @@ import LoadingSpinner from "../../loading/LoadingSpinner";
 const TutorialList = () => {
   const [tutorials, setTutorials] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [searchTerms, setSearchTerms] = useState("");
   const getTutorialList = async () => {
     try {
       setLoading(true);
@@ -24,6 +25,10 @@ const TutorialList = () => {
     getTutorialList();
   }, []);
 
+  const filteredTutorials = tutorials.filter((tutorial) =>
+    tutorial.Title.toLowerCase().includes(searchTerms.toLowerCase())
+  );
+
   return (
     <section className="h-[100vh] flex justify-center items-center flex-col gap-4">
       <div className="mt-8 relative w-full max-w-md">
@@ -34,17 +39,19 @@ const TutorialList = () => {
         <input
           type="search"
           placeholder="Search..."
+          value={searchTerms}
           className="w-full pl-10 pr-4 py-2 border border-black rounded-[8px] focus:outline-none"
+          onChange={(e) => setSearchTerms(e.target.value)}
         />
       </div>
 
-      <div className="w-[1000px] h-[500px] p-8 rounded-[8px] bg-[#333333] flex gap-9 flex-wrap ">
+      <div className="w-full flex justify-center items-center sm:w-auto h-[500px] p-8 rounded-[8px] bg-[#333333] flex gap-9 flex-wrap overflow-y-auto ">
         {loading ? (
           <div className="flex justify-center items-center w-full">
             <LoadingSpinner />
           </div>
-        ) : (
-          tutorials.map((tutorial, index) => (
+        ) : filteredTutorials.length > 0 ? (
+          filteredTutorials.map((tutorial, index) => (
             <div key={index}>
               <div className="w-[200px] h-[150px] rounded-[8px] gap-4">
                 <img
@@ -63,6 +70,8 @@ const TutorialList = () => {
               </div>
             </div>
           ))
+        ) : (
+          <p className="text-white">No tutorials found.</p>
         )}
       </div>
     </section>
