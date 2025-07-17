@@ -37,6 +37,9 @@ export default function NavbarUser() {
           <li className="hover:text-sky-500 transition-all duration-300">
             <Link to={"/drivix/tutorial/pages"}>Tutorial</Link>
           </li>
+          <li className="hover:text-sky-500 transition-all duration-300">
+            <Link to={"/drivix/tips/pages"}>Tips</Link>
+          </li>
         </ul>
       </div>
     </nav>

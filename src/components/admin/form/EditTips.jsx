@@ -15,6 +15,7 @@ const EditTips = () => {
     Image: "",
     oldThumbnail: "", // <--- TAMBAH ini
     oldImage: "", // <--- TAMBAH ini
+    category: "",
   });
 
   const [success, setSuccess] = useState(false);
@@ -73,6 +74,7 @@ const EditTips = () => {
           Image: null,
           oldThumbnail: result.data.Thumbnail || "",
           oldImage: result.data.Image || "",
+          category: result.data.category || "",
         });
         setThumbnailPreview(result.data.Thumbnail || "");
         setImagePreview(result.data.Image || "");
@@ -98,6 +100,7 @@ const EditTips = () => {
     const formDataToSend = new FormData();
     formDataToSend.append("Title", formData.Title);
     formDataToSend.append("Description", formData.Description);
+    formDataToSend.append("category", formData.category);
 
     // VALIDASI, kalau user gak upload file baru => kita tetap kirim file lama
     if (formData.Thumbnail) {
@@ -154,7 +157,7 @@ const EditTips = () => {
   if (loading) {
     return (
       <div className="text-center py-10 text-white">
-        <p>Loading tip details...</p>
+        <LoadingSpinner />
       </div>
     );
   }
@@ -248,6 +251,22 @@ const EditTips = () => {
               />
             )
           )}
+        </div>
+        <div className="mb-4">
+          <label className="block text-lg mb-2" htmlFor="category">
+            Category
+          </label>
+          <select
+            id="category"
+            name="category"
+            value={formData.category}
+            onChange={handleInputChange}
+            className="w-full p-3 bg-gray-800 text-white rounded-md border border-gray-700"
+          >
+            <option value="">-- Select Category --</option>
+            <option value="Berat">Berat</option>
+            <option value="Ringan">Ringan</option>
+          </select>
         </div>
 
         <div className="mb-4">

@@ -19,6 +19,8 @@ import AdminBengkelPages from "./pages/admin/bengkel/AdminBengkelPages";
 import AdminAddBengkel from "./pages/admin/bengkel/AdminAddBengkel";
 import AdminEditBengkel from "./pages/admin/bengkel/AdminEditBengkel";
 import BengkelSinglePages from "./pages/user/drivix/BengkelSingle";
+import TipsPages from "./pages/user/drivix/TipsPages";
+
 import SSOCallbackHandler from "./utils/SSOCallbackHandler";
 import ProtectedRoute from "./utils/ProtectedRoutes";
 import CompTest from "./test/CompTest";
@@ -53,6 +55,7 @@ function App() {
               path="/drivix/single/bengkel/:Bengkel_Id"
               element={<BengkelSinglePages />}
             />
+            <Route path="/drivix/tips/pages" element={<TipsPages />} />
           </Route>
 
           {/* Admin */}

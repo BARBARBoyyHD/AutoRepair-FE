@@ -7,6 +7,7 @@ import { RiPencilFill } from "react-icons/ri";
 import { FaTrash } from "react-icons/fa";
 import DeleteTips from "../button/tips/DeleteTips";
 import LoadingSpinner from "../loading/LoadingSpinner";
+import StripHtml from "../../../lib/StripHtml";
 
 const AdminTipsList = () => {
   const [data, setData] = useState([]);
@@ -74,7 +75,8 @@ const AdminTipsList = () => {
                   <div className="p-4">
                     <h2 className="text-xl font-semibold mb-2">{item.Title}</h2>
                     <p className="text-gray-600 text-sm hover:text-slate-800">
-                      {item.Description}
+                      {StripHtml(item.Description).slice(0, 200)}
+                      {StripHtml(item.Description).length > 200 ? "..." : ""}
                     </p>
                   </div>
                   <div className="p-3 flex gap-3">

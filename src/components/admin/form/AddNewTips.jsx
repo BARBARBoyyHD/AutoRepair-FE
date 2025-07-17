@@ -8,6 +8,7 @@ const AddNewTips = () => {
     Description: "",
     Thumbnail: null,
     Image: null,
+    category: "",
   });
 
   const [success, setSuccess] = useState(false);
@@ -45,6 +46,7 @@ const AddNewTips = () => {
     formDataToSend.append("Description", formData.Description);
     formDataToSend.append("Thumbnail", formData.Thumbnail);
     formDataToSend.append("Image", formData.Image);
+    formDataToSend.append("category", formData.category);
 
     try {
       const response = await fetch(`${BASE_URL}/api/v2/post/tips`, {
@@ -118,6 +120,23 @@ const AddNewTips = () => {
             className="w-full p-3 bg-gray-800 text-white rounded-md border border-gray-700"
           />
         </div>
+        <div className="mb-4">
+          <label className="block text-lg mb-2" htmlFor="category">
+            Category
+          </label>
+          <select
+            id="category"
+            name="category"
+            value={formData.category}
+            onChange={handleInputChange}
+            className="w-full p-3 bg-gray-800 text-white rounded-md border border-gray-700"
+          >
+            <option value="">-- Select Category --</option>
+            <option value="Berat">Berat</option>
+            <option value="Ringan">Ringan</option>
+          </select>
+        </div>
+
         <div className="mb-4">
           <label className="block text-lg mb-2" htmlFor="Description">
             Description
