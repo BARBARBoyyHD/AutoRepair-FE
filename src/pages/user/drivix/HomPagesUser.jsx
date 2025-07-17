@@ -30,7 +30,6 @@ const HomPagesUser = () => {
         <NavbarUser /> // Desktop navbar
       )}
       <Section1 />
-      <Section2 />
     </main>
   );
 };
