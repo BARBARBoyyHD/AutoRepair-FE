@@ -29,7 +29,7 @@ export default function NavbarUser() {
 
         <ul className="flex space-x-6 font-semibold list-none ">
           <li className="hover:text-sky-500 transition-all duration-300">
-            <Link to={"/drivix/user/homepage"}>Home</Link>
+            <Link to={"/"}>Home</Link>
           </li>
           <li className="hover:text-sky-500 transition-all duration-300">
             <Link to={"/drivix/bengkel/terdekat"}>Bengkel Terdekat</Link>

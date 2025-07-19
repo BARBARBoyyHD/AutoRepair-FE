@@ -114,7 +114,7 @@ const Section2 = () => {
 
               <div>
                 <Link
-                  to={`/drivix/single/tips/${tip.Tips_Id}`}
+                  to={`${tip.link}`}
                   className="mt-auto bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-center inline-block"
                 >
                   Buka

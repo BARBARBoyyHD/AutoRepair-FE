@@ -9,6 +9,7 @@ const AddNewTips = () => {
     Thumbnail: null,
     Image: null,
     category: "",
+    link: "",
   });
 
   const [success, setSuccess] = useState(false);
@@ -47,6 +48,7 @@ const AddNewTips = () => {
     formDataToSend.append("Thumbnail", formData.Thumbnail);
     formDataToSend.append("Image", formData.Image);
     formDataToSend.append("category", formData.category);
+    formDataToSend.append("link", formData.link);
 
     try {
       const response = await fetch(`${BASE_URL}/api/v2/post/tips`, {
@@ -135,6 +137,20 @@ const AddNewTips = () => {
             <option value="Berat">Berat</option>
             <option value="Ringan">Ringan</option>
           </select>
+        </div>
+        <div className="mb-4">
+          <label className="block text-lg mb-2" htmlFor="link">
+            link
+          </label>
+          <input
+            type="text"
+            id="link"
+            name="link"
+            value={formData.link}
+            onChange={handleInputChange}
+            className="w-full p-3 bg-gray-800 text-white rounded-md border border-gray-700"
+            placeholder="Enter the link"
+          />
         </div>
 
         <div className="mb-4">

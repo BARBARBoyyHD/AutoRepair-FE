@@ -35,11 +35,8 @@ function App() {
 
           <Route path="/user/login/pages" element={<LoginPages />} />
           <Route path="/user/signUp/pages" element={<SignUpPages />} />
-          <Route
-            path="/user/login/pages/sso-callback"
-            element={<SSOCallbackHandler />}
-          />
-          <Route element={<ProtectedRoute />}>
+          
+         
             <Route path="/drivix/user/homepage" element={<HomePagesUser />} />
             <Route path="/drivix/tutorial/pages" element={<TutorialPages />} />
             <Route
@@ -56,7 +53,6 @@ function App() {
               element={<BengkelSinglePages />}
             />
             <Route path="/drivix/tips/pages" element={<TipsPages />} />
-          </Route>
 
           {/* Admin */}
           <Route path="/admin/login/pages" element={<AdminLogin />} />
