@@ -53,21 +53,21 @@ const TutorialList = () => {
         ) : filteredTutorials.length > 0 ? (
           filteredTutorials.map((tutorial, index) => (
             <div key={index}>
-              <div className="w-[200px] h-[150px] rounded-[8px] gap-4">
-                <img
-                  src={tutorial.Thumbnail}
-                  className="h-full w-full object-cover"
-                  alt=""
-                />
-              </div>
-              <div>
-                <h1 className="text-white font-semibold">{tutorial.Title}</h1>
-              </div>
-              <div className="flex justify-end">
-                <Link to={`/drivix/single/tutorial/${tutorial.Tutor_Id}`}>
-                  <IoIosArrowForward className="text-white" />
-                </Link>
-              </div>
+              <Link to={`/drivix/single/tutorial/${tutorial.Tutor_Id}`}>
+                <div className="w-[260px] h-[190px] rounded-[8px] gap-4">
+                  <img
+                    src={tutorial.Thumbnail}
+                    className="h-full w-full object-cover rounded-[6px]"
+                    alt=""
+                  />
+                </div>
+                <div>
+                  <h1 className="text-white font-semibold">
+                    {tutorial.Title.split(" ").slice(0, 5).join(" ")}
+                    {tutorial.Title.split(" ").length > 5 && " ..."}
+                  </h1>
+                </div>
+              </Link>
             </div>
           ))
         ) : (

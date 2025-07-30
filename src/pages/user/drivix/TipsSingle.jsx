@@ -30,7 +30,7 @@ const TipsSingle = () => {
       ) : (
         <NavbarUser /> // Desktop navbar
       )}
-      <Section1 />
+      
       <TipsSingleComp />
     </main>
   );

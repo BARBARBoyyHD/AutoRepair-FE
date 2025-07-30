@@ -29,7 +29,7 @@ const TipsSingleComp = () => {
 
   return (
     <section className="min-h-[100vh] w-full flex justify-center items-center p-8 flex-col ">
-      <div className="flex justify-center flex-col items-center mb-4">
+      <div className="mt-[100px] flex justify-center flex-col items-center mb-4">
         <h1 className="text-white text-4xl font-bold">Tips & Trik </h1>
         <p className="text-white">
           Tips & Trik yang bisa kalian jadikan sebagai cara perawatan kendaraan
@@ -42,17 +42,12 @@ const TipsSingleComp = () => {
             <LoadingSpinner />
           ) : tipsData ? (
             <div className="w-full space-y-6">
-              <h1 className="text-4xl text-white font-bold text-center">
+              <iframe src={tipsData.link} className="w-full aspect-video rounded-[8px]" allow="autoplay" allowFullScreen/>
+              <h1 className="text-4xl text-white font-bold">
                 {tipsData.Title}
               </h1>
 
-              <div className="flex flex-col lg:flex-row gap-8 items-center justify-center">
-                <img
-                  src={tipsData.Image}
-                  alt={tipsData.Title}
-                  className="w-full max-w-md h-[350px] object-cover rounded-lg"
-                />
-
+              <div className="flex flex-col lg:flex-row gap-8 ">
                 <div
                   className="prose prose-invert max-w-none text-white"
                   dangerouslySetInnerHTML={{ __html: tipsData.Description }}

@@ -35,26 +35,15 @@ const SingleTutorialComp = () => {
           <LoadingSpinner />
         ) : tutorialData ? (
           <div className="space-y-6">
-            <h1 className="text-white font-extrabold text-4xl text-center">
+            <iframe src={tutorialData.Link_Tutor} className="w-full aspect-video rounded-[8px]" allow="autoplay"/>
+            <h1 className="text-white font-extrabold text-3xl">
               {tutorialData.Title}
             </h1>
-            <img
-              src={tutorialData.Thumbnail}
-              alt={tutorialData.Title}
-              className="w-full max-w-md rounded-lg mx-auto"
-            />
+         
             <div
               className="prose prose-invert max-w-none text-white"
               dangerouslySetInnerHTML={{ __html: tutorialData.Description }}
             />
-            <a
-              href={tutorialData.Link_Tutor}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block mt-4 bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition"
-            >
-              Lihat Tutorial
-            </a>
           </div>
         ) : (
           <div className="text-white">Not found</div>

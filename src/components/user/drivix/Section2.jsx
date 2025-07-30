@@ -19,6 +19,7 @@ const Section2 = () => {
         setLoading(true);
         const result = await axios.get(`${BASE_URL}/api/v1/get/all/tips`);
         const response = result.data.data;
+        console.log(response)
         setTips(response);
         setFilteredTips(response);
       } catch (error) {
@@ -114,7 +115,7 @@ const Section2 = () => {
 
               <div>
                 <Link
-                  to={`${tip.link}`}
+                  to={`/drivix/single/tips/${tip.Tips_Id}`}
                   className="mt-auto bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-center inline-block"
                 >
                   Buka
