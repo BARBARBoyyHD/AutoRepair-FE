@@ -1,52 +1,80 @@
 import mapboxgl from "mapbox-gl";
-import "mapbox-gl/dist/mapbox-gl.css";
-import React, { useEffect, useRef, useState } from "react";
+import MapboxDirections from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
+import "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css";
+import { useEffect, useRef } from "react";
 import { MAPBOX_SECRET } from "../../../../config/MapBoxSecret";
-import { useParams } from "react-router-dom";
-import LoadingSpinner from "../../loading/LoadingSpinner";
 
-const MapBox = ({ Coordinate_X, Coordinate_Y, Bengkel_name }) => {
-  const { Bengkel_Id } = useParams();
+const MapBox = ({ allBengkels }) => {
   const mapContainerRef = useRef(null);
-  const [loading, setLoading] = useState(true); // loading state
-
-  const customCoordinates = [Coordinate_X, Coordinate_Y];
+  const mapRef = useRef(null);
+  const directionsRef = useRef(null);
 
   useEffect(() => {
     mapboxgl.accessToken = MAPBOX_SECRET;
+
+    // Create map
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
-      style: "mapbox://styles/mapbox/streets-v12",
-      center: customCoordinates,
-      zoom: 15,
+      style: "mapbox://styles/mapbox/streets-v11",
+      center: [107.6191, -6.9175], // Default center
+      zoom: 12,
     });
 
-    // When map finishes loading
-    map.on("load", () => {
-      setLoading(false); // hide spinner
+    mapRef.current = map;
+
+    // Add controls
+    map.addControl(new mapboxgl.NavigationControl(), "top-right");
+
+    // Get user's current position
+    navigator.geolocation.getCurrentPosition((position) => {
+      const userCoords = [position.coords.longitude, position.coords.latitude];
+
+      // Add user location marker
+      new mapboxgl.Marker({ color: "blue" })
+        .setLngLat(userCoords)
+        .setPopup(new mapboxgl.Popup().setHTML("<b>Your Location</b>"))
+        .addTo(map);
+
+      // Initialize directions
+      const directions = new MapboxDirections({
+        accessToken: MAPBOX_SECRET,
+        unit: "metric",
+        profile: "mapbox/driving",
+        interactive: false,
+      });
+
+      directionsRef.current = directions;
+      map.addControl(directions, "top-left");
+
+      // Add all bengkel markers
+      allBengkels.forEach((bengkel) => {
+        const marker = new mapboxgl.Marker({ color: "red" })
+          .setLngLat([bengkel.Coordinate_X, bengkel.Coordinate_Y])
+          .setPopup(
+            new mapboxgl.Popup().setHTML(
+              `<div>
+                 <h3>${bengkel.Bengkel_name}</h3>
+                 <p>${bengkel.Address}</p>
+                 <button onclick="window.setDirection([${bengkel.Coordinate_X}, ${bengkel.Coordinate_Y}])">
+                   Show Route
+                 </button>
+               </div>`
+            )
+          )
+          .addTo(map);
+      });
+
+      // Make a global method to be called from popup button
+      window.setDirection = (destinationCoords) => {
+        directions.setOrigin(userCoords);
+        directions.setDestination(destinationCoords);
+      };
     });
-
-    const popup = new mapboxgl.Popup({ offset: 25 }).setText(Bengkel_name);
-
-    new mapboxgl.Marker()
-      .setLngLat(customCoordinates)
-      .setPopup(popup)
-      .addTo(map)
-      .togglePopup();
 
     return () => map.remove();
-  }, []);
+  }, [allBengkels]);
 
-  return (
-    <div className="mt-5 w-full h-[400px] rounded-lg overflow-hidden relative">
-      {loading && (
-        <div className="absolute inset-0 z-10 bg-black bg-opacity-70 flex justify-center items-center">
-          <LoadingSpinner />
-        </div>
-      )}
-      <div ref={mapContainerRef} id="map" className="w-full h-full" />
-    </div>
-  );
+  return <div ref={mapContainerRef} className="w-full h-full" />;
 };
 
 export default MapBox;

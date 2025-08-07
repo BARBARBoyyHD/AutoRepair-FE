@@ -4,106 +4,118 @@ import { BASE_URL } from "../../../../config/BaseUrl";
 import { BiSearch } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../../loading/LoadingSpinner";
+import MapBoxList from "./MapBoxList";
 
 const BengkelComp = () => {
   const [search, setSearch] = useState("");
-  const [result, setResult] = useState([]);
+  const [allBengkel, setAllBengkel] = useState([]);
+  const [filteredBengkel, setFilteredBengkel] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [userLocation, setUserLocation] = useState(null);
+  const [selectedBengkel, setSelectedBengkel] = useState(null);
+
   const navigate = useNavigate();
+
+  // Get all bengkels on first load
+  useEffect(() => {
+    const fetchAllBengkel = async () => {
+      try {
+        setLoading(true);
+        const res = await axios.get(`${BASE_URL}/api/v2/all/bengkel`);
+        const data = res.data.data;
+        console.log(data)
+        setAllBengkel(data);
+        setFilteredBengkel(data);
+      } catch (err) {
+        console.error("Failed to fetch all bengkels:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchAllBengkel();
+  }, []);
+
+  // Geolocation
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setUserLocation([pos.coords.longitude, pos.coords.latitude]);
+      },
+      () => {
+        setUserLocation([107.6186, -6.9175]); // fallback Bandung
+      }
+    );
+  }, []);
+
+  // Search handler
   const handleSearch = async () => {
+    if (!search) {
+      setFilteredBengkel(allBengkel); // Reset to all
+      return;
+    }
+
     try {
       setLoading(true);
-      const result = await axios.get(
+      const res = await axios.get(
         `${BASE_URL}/api/v1/bengkel?search=${encodeURIComponent(search)}`
       );
-      const response = result.data.data;
-      setResult(response);
+      const data = res.data.data;
+      setFilteredBengkel(data);
     } catch (error) {
-      console.error("Search failed", error);
+      console.error("Search failed:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  const goToBengkelSingle = (item_id) => {
-    navigate(`/drivix/single/bengkel/${item_id}`);
+  const goToBengkelSingle = (id) => {
+    navigate(`/drivix/single/bengkel/${id}`);
   };
 
-  useEffect(() => {}, []);
-
   return (
-    <section className="h-screen flex flex-col items-center">
-      {/* Search Bar */}
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSearch();
-        }}
-        className="flex gap-2 mt-[100px]"
-      >
-        <div className="relative w-full max-w-sm">
-          <BiSearch
-            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500"
-            size={20}
-          />
+    <section className="h-screen flex">
+      {/* Sidebar */}
+      <div className="w-[350px] bg-white p-4 shadow-md overflow-y-auto mt-[100px]">
+        {/* <div className="flex mb-4 items-center gap-2">
           <input
             type="text"
-            placeholder="Type anything"
+            className="border rounded p-2 w-full"
+            placeholder="Search Bengkel..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-        </div>
-        <button
-          type="submit"
-          className="text-white px-5 py-1 rounded-[6px] bg-sky-700 font-bold"
-        >
-          Search
-        </button>
-      </form>
+          <button onClick={handleSearch}>
+            <BiSearch size={24} />
+          </button>
+        </div> */}
 
-      {/* Scrollable Result Area */}
-      <div className="mt-4 w-full px-4 overflow-y-auto flex-1 bg-bengkelBg bg-cover bg-center bg-no-repeat">
-        {loading ? (
-          <div className="flex justify-center items-center w-full h-full">
-            <LoadingSpinner />
-          </div>
-        ) : (
-          result.map((item, index) => (
-            <div
-              key={index}
-              onClick={() => goToBengkelSingle(item.Bengkel_Id)}
-              className="bg-white/10 backdrop-blur-md rounded-lg p-4 mb-6 text-white shadow-lg flex flex-col md:flex-row items-start md:items-center gap-4"
+        {loading && <LoadingSpinner />}
+
+        {filteredBengkel.map((b) => (
+          <div
+            key={b.Bengkel_Id}
+            className="mb-4 cursor-pointer hover:bg-gray-100 p-2 rounded"
+            onClick={() => setSelectedBengkel(b)}
+          >
+            <h3 className="text-lg font-semibold">{b.Bengkel_name}</h3>
+            <p className="text-sm text-gray-600">{b.Address}</p>
+            <button
+              onClick={() => goToBengkelSingle(b.Bengkel_Id)}
+              className="text-blue-500 text-xs mt-1 underline"
             >
-              <img
-                src={item.image}
-                alt={item.Bengkel_name}
-                className="w-full md:w-48 h-auto object-cover rounded-md"
-              />
-              <div className="flex flex-col">
-                <h1 className="text-lg md:text-xl font-semibold mb-1">
-                  {item.Bengkel_name}
-                </h1>
-                <p className="text-sm mb-1">{item.Address}</p>
-                <div
-                  className="text-sm mb-1"
-                  dangerouslySetInnerHTML={{ __html: item.Description }}
-                ></div>
-                <p className="text-sm mb-2">{item.Phone_Number}</p>
-                {item.Link && (
-                  <a
-                    href={item.Link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-400 underline text-sm"
-                  >
-                    Visit Website
-                  </a>
-                )}
-              </div>
-            </div>
-          ))
-        )}
+              View Details
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {/* Map */}
+      <div className=" mt-[100px] flex-1 h-full">
+        <MapBoxList
+          bengkelList={allBengkel}
+          userLocation={userLocation}
+          selectedBengkel={selectedBengkel}
+        />
       </div>
     </section>
   );

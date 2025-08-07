@@ -14,12 +14,7 @@ const Section1 = () => {
           <p className="text-[15px] h-auto w-[350px] text-center p-2 ">
             Solusi Darurat Mobil Anda Cepat, Tepat, dan Selalu Siap di Mana Saja
           </p>
-          <button
-            onClick={handleLoginPage}
-            className="px-4 py-1 rounded-[6px] bg-slate-100 text-slate-950 font-semibold hover:bg-slate-950 hover:text-slate-100 transition-all duration-300"
-          >
-            Explore Now
-          </button>
+        
         </div>
       </div>
       <div className="w-full h-full bg-CarHomePage bg-cover bg-no-repeat bg-center sm:bg-top"></div>
