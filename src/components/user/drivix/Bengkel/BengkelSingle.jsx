@@ -17,6 +17,7 @@ const BengkelSingle = () => {
         `${BASE_URL}/api/v2/single/bengkel/${Bengkel_Id}`
       );
       const response = result.data.data;
+      console.log(response)
       setResult(response);
     } catch (error) {
       console.error("error : ", error);
@@ -69,11 +70,7 @@ const BengkelSingle = () => {
       </div>
       <div>
         {result.Coordinate_X && result.Coordinate_Y && result.Bengkel_name && (
-          <MapBox
-            Coordinate_X={result.Coordinate_X}
-            Coordinate_Y={result.Coordinate_Y}
-            Bengkel_name={result.Bengkel_name}
-          />
+         <MapBox allBengkels={result} />
         )}
       </div>
     </section>

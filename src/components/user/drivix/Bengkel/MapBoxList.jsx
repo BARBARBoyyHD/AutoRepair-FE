@@ -11,13 +11,14 @@ const MapBoxList = ({ bengkelList, userLocation }) => {
 
   useEffect(() => {
     if (!userLocation || !bengkelList || bengkelList.length === 0) return;
+    console.log(userLocation);
 
     mapboxgl.accessToken = MAPBOX_SECRET;
 
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: "mapbox://styles/mapbox/streets-v11",
-      center: userLocation || [107.6191, -6.9175],
+      center: userLocation,
       zoom: 12,
     });
 
@@ -28,7 +29,9 @@ const MapBoxList = ({ bengkelList, userLocation }) => {
       accessToken: mapboxgl.accessToken,
       unit: "metric",
       profile: "mapbox/driving",
-      interactive: false,
+      controls: {
+        instructions: false, // ✅ hides the big black panel
+      },
     });
 
     directionsRef.current = directions;
